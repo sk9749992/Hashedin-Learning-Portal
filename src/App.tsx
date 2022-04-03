@@ -1,25 +1,28 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Navbar from './Components/Navbar';
+import Dashboard from './Pages/Dashboard';
+import CourseDetail from './Pages/CourseDetail';
+import Whislist from './Pages/Whislist';
+import ProfileInformation from './Pages/ProfileInformation';
+import CheckoutCart from './Pages/CheckoutCart';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Navbar/>
+        <Routes>
+          <Route path='/' element={<Dashboard/>}></Route>
+          <Route path='/:courseId' element={<CourseDetail/>}></Route>
+          <Route path='/whislist' element={<Whislist/>}></Route>
+          <Route path='/profile' element={<ProfileInformation/>}></Route>
+          <Route path='/cart' element={<CheckoutCart/>}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
