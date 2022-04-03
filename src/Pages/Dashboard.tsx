@@ -24,7 +24,7 @@ const Dashboard = () => {
     { value: 'low', display: 'Low to High' },
     { value: 'high', display: 'High to Low' },
   ];
-  const coursesPerPage = 5;
+  const coursesPerPage = 7;
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const currentSortType = e.target.value;
@@ -66,16 +66,16 @@ const Dashboard = () => {
   }, [courses]);
 
   const generateDashboardCourses = (boardCourses: ICourses[]) => {
-    const coursesTotalCount = boardCourses.length;
+    const coursesTotalCount = boardCourses?.length;
     const totalPages = Math.ceil(coursesTotalCount / coursesPerPage);
     setCoursePages(getArrayOfPages(totalPages));
 
-    setDefaultCourses(boardCourses.slice(0, 5));
+    setDefaultCourses(boardCourses.slice(0, coursesPerPage));
 
-    if (coursesTotalCount <= 5) {
+    if (coursesTotalCount <= coursesPerPage) {
       setDashboardCourses(JSON.parse(JSON.stringify(boardCourses)));
     } else {
-      setDashboardCourses(boardCourses.slice(0, 5));
+      setDashboardCourses(boardCourses.slice(0, coursesPerPage));
     }
   }
 

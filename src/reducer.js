@@ -1,9 +1,9 @@
 import { HashedinCourses } from './data';
 
-const initialState = {
-    dashboardCourses: HashedinCourses,
-}
 
 export const reducer = (state, action) => {
-    return state;
+    if (action.type === 'ADD_TO_WIDGET') {
+        const newCartItem = HashedinCourses.find((course) => course.courseId === action.payload);
+        return {...state, courseWidget: [...state.courseWidget, newCartItem]};
+    }
 }

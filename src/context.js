@@ -6,13 +6,21 @@ export const AppContext = React.createContext();
 
 const initialState = {
     courses: HashedinCourses,
+    courseWidget: [],
 }
+
+
 
 export const AppProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
+    const addCourseToCartWidget = (id) => {
+        dispatch({type: 'ADD_TO_WIDGET', payload: id});
+    }
+
     return <AppContext.Provider value={{
-        ...state
+        ...state,
+        addCourseToCartWidget
     }}>
         {children}
     </AppContext.Provider>

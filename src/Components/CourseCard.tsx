@@ -1,6 +1,7 @@
 import React from 'react'
 import {FaStar} from 'react-icons/fa';
 import {FaAngleRight} from 'react-icons/fa';
+import { useGlobalContext } from '../context';
 import { ICourses } from '../Interfaces/Courses';
 import './CourseCard.css';
 
@@ -9,7 +10,8 @@ interface ICourseProp {
 }
 
 const CourseCard = ({course}: ICourseProp) => {
-  const  {courseId, courseName, description, tags, author, IsWhishlisted, price, actualPrice} = course;
+  const {addCourseToCartWidget} = useGlobalContext();
+  const  {courseId, courseName, tags, author, IsWhishlisted, price, actualPrice} = course;
   return (
     <div className='course-card'>
         <div className="row">
@@ -34,7 +36,7 @@ const CourseCard = ({course}: ICourseProp) => {
                 <i>Rs</i> {actualPrice} <i>/-</i></span> : <span>-</span>}
           </div>
           <div className="col-lg-2 pt-3">
-            <button className="course-card-btn right-space">add to card</button>
+            <button className="course-card-btn right-space" onClick={() => addCourseToCartWidget(courseId)}>add to card</button>
             <span className="course-arrow cursor">
               <FaAngleRight/>
             </span>
