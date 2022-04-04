@@ -7,6 +7,7 @@ export const AppContext = React.createContext();
 const initialState = {
     courses: HashedinCourses,
     courseWidget: [],
+    whisListCourses: []
 }
 
 
@@ -27,6 +28,18 @@ export const AppProvider = ({children}) => {
         dispatch({type: 'DELETE_CART_ITEM', payload: id})
     }
 
+    const addToWhisList = (id) => {
+        dispatch({type: 'ADD_TO_WHISLIST', payload: id});
+    }
+
+    const updateWhisList = (id) => {
+        dispatch({type: 'UPDATE_WHISLIST', payload: id})
+    }
+
+    const deleteWhisList = (id) => {
+        dispatch({type: 'DELETE_WHISLIST', payload: id})
+    }
+
     const openModal = (message) => {
         setModal({show: true, message});
     }
@@ -42,7 +55,10 @@ export const AppProvider = ({children}) => {
         openModal,
         closeModal,
         emptyCart,
-        deleteCartItem
+        deleteCartItem,
+        updateWhisList,
+        deleteWhisList,
+        addToWhisList
     }}>
         {children}
     </AppContext.Provider>

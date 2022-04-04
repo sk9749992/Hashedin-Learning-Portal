@@ -10,7 +10,7 @@ import { ICourses } from '../Interfaces/Courses';
 import DialogModal from '../Components/DialogModal';
 
 const CourseDetail = () => {
-  const {addCourseToCartWidget, courseWidget, openModal} = useGlobalContext();
+  const {addCourseToCartWidget, courseWidget, openModal, addToWhisList} = useGlobalContext();
   const {courseId} = useParams();
   const [timeLeftForOffer, setTimeLeftForOffer] = useState<number>();
   const courseDetail = HashedinCourses.find((course) => course.courseId === parseInt(courseId ? courseId : '1'));
@@ -95,7 +95,7 @@ const CourseDetail = () => {
         <button className="course-detail-cart-btn" onClick={() => handleAddingToCart(courseId ? courseId : '1')}>
           add to cart
         </button>
-        <button className="course-detail-wishlist-btn">
+        <button className="course-detail-wishlist-btn" onClick={() => addToWhisList(parseInt(courseId ? courseId : '1'))}>
           add to whislist <FaClipboardList className='clipboard-icon'/>
         </button>
         </div>

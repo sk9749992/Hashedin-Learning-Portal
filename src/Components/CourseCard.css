@@ -55,7 +55,7 @@
 }
 
 .actual-price {
-  font-size: 10px;
+  font-size: 8px;
   text-decoration: line-through;
   margin-left: 1rem;
 }
@@ -78,4 +78,8 @@
 
 .course-trash-icon {
   font-size: 1.25rem;
+}
+
+.right-space {
+  margin-right: 25px;
 }

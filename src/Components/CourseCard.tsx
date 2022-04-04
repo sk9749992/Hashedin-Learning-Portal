@@ -14,7 +14,7 @@ interface ICourseProp {
 }
 
 const CourseCard = ({course, screenName}: ICourseProp) => {
-  const {addCourseToCartWidget, openModal, courseWidget, deleteCartItem} = useGlobalContext();
+  const {addCourseToCartWidget, openModal, courseWidget, deleteCartItem, updateWhisList, deleteWhisList, addToWhisList} = useGlobalContext();
   const navigate = useNavigate();
   const  {courseId, courseName, tags, author, IsWhishlisted, price, actualPrice} = course;
 
@@ -37,15 +37,13 @@ const CourseCard = ({course, screenName}: ICourseProp) => {
     if (name === 'courseDetail') {
       if (screenName === 'cart') {
         return 'col-lg-6';
-      } else if (screenName === 'whislist') {
-        return 'col-lg-3';
-      } else {
+      }  else {
         return 'col-lg-4';
       }
     }
 
     if (name === 'priceSection') {
-      return screenName === 'cart' ? 'col-lg-2' : 'col-lg-3';
+      return screenName === 'cart' || screenName === 'whislist' ? 'col-lg-2' : 'col-lg-3';
     }
 
     if (name === 'navigateSection') {
@@ -57,6 +55,19 @@ const CourseCard = ({course, screenName}: ICourseProp) => {
         return 'col-lg-2';
       }
     }
+  }
+
+  const deleteItem = (id: number) => {
+    if (screenName === 'cart') {
+      deleteCartItem(id);
+    } else {
+      deleteWhisList(id);
+    }
+  }
+
+  const moveToWhisList = (id: number) => {
+    addToWhisList(id);
+    deleteCartItem(id);
   }
 
   return (
@@ -82,11 +93,11 @@ const CourseCard = ({course, screenName}: ICourseProp) => {
           </div>}
 
           {screenName === 'cart' && <div className="col-lg-2 pt-3 wishlist-link">
-            <a className="cursor">move to wishlist</a>
+            <a className="cursor" onClick={() => moveToWhisList(courseId)}>move to wishlist</a>
           </div>}
 
           <div className={`pt-3 ${handleCourseCardClasses('priceSection')}`} >
-            {screenName === 'dashboard' && <FaStar className={IsWhishlisted ? 'whislist-icon whislisted' : 'whislist-icon'}/>}
+            {screenName === 'dashboard' && <FaStar onClick={() => updateWhisList(courseId)} className={IsWhishlisted ? 'whislist-icon whislisted' : 'whislist-icon'}/>}
             <span className="course-price"><i>Rs</i> {price} <i>/-</i></span>
             {screenName !== 'cart' && (actualPrice > 0 ? <span className="actual-price">
                 <i>Rs</i> {actualPrice} <i>/-</i></span> : <span className='empty-price'>-</span>)}
@@ -94,7 +105,7 @@ const CourseCard = ({course, screenName}: ICourseProp) => {
 
           <div className={`pt-3 ${handleCourseCardClasses('navigateSection')}`}>
             {screenName !== 'cart' && <button className="course-card-btn right-space" onClick={() => handleAddCart(courseId)}>add to card</button>}
-            {(screenName !== 'dashboard' && screenName !== 'recommended') ?  <span className="course-trash cursor right-space" onClick={() => deleteCartItem(courseId)}>
+            {(screenName !== 'dashboard' && screenName !== 'recommended') ?  <span className="course-trash cursor right-space" onClick={() => deleteItem(courseId)}>
               <GoTrashcan className='course-trash-icon'/>
             </span>: ''}
             {screenName !== 'cart' && <span className="course-arrow cursor" onClick={() => handleNavigationToCourseDetailPage(courseId)}>

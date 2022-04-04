@@ -1,0 +1,14 @@
+.filters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters-text {
+  text-transform: capitalize;
+  font-weight: 600;
+  align-self: center;
+}
+
+.filters select {
+  height: 2rem;
+}
