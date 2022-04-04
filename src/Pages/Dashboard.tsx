@@ -175,7 +175,7 @@ const Dashboard = () => {
       <div className="row">
         <div className="col-lg-8">
           {dashboardCourses?.map((course: ICourses) => {
-          return <CourseCard key={course.courseId} course= {course}/>
+          return <CourseCard key={course.courseId} course= {course} screenName='dashboard'/>
           })}
         </div>
         <div className="col-lg-4">

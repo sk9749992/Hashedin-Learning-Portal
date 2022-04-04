@@ -5,8 +5,12 @@ import SubHeader from '../Components/SubHeader'
 import {FaClipboardList} from 'react-icons/fa';
 import {BsClockHistory} from 'react-icons/bs';
 import './CourseDetail.css'
+import { useGlobalContext } from '../context';
+import { ICourses } from '../Interfaces/Courses';
+import DialogModal from '../Components/DialogModal';
 
 const CourseDetail = () => {
+  const {addCourseToCartWidget, courseWidget, openModal} = useGlobalContext();
   const {courseId} = useParams();
   const [timeLeftForOffer, setTimeLeftForOffer] = useState<number>();
   const courseDetail = HashedinCourses.find((course) => course.courseId === parseInt(courseId ? courseId : '1'));
@@ -16,6 +20,16 @@ const CourseDetail = () => {
   useEffect(() => {
     setTimeLeftForOffer(24 - new Date().getHours());
   }, [courseId]);
+
+  const handleAddingToCart = (id: string) => {
+    const index = courseWidget.findIndex((course: ICourses) => course.courseId === parseInt(id));
+    if (index < 0) {
+      addCourseToCartWidget(parseInt(id));
+      openModal('Course successfully added to the cart');
+    } else {
+      openModal('Already Exists in Cart');
+    }
+  }
 
   return (
     <>
@@ -78,7 +92,7 @@ const CourseDetail = () => {
         }
         <div className="btn-container">
 
-        <button className="course-detail-cart-btn">
+        <button className="course-detail-cart-btn" onClick={() => handleAddingToCart(courseId ? courseId : '1')}>
           add to cart
         </button>
         <button className="course-detail-wishlist-btn">
@@ -89,6 +103,7 @@ const CourseDetail = () => {
     </div>
       </div>
     </div>
+    <DialogModal/>
 </>
   )
 }

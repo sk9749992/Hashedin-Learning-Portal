@@ -19,6 +19,14 @@ export const AppProvider = ({children}) => {
         dispatch({type: 'ADD_TO_WIDGET', payload: id});
     }
 
+    const emptyCart = () => {
+        dispatch({type: 'EMPTY_CART'});
+    }
+
+    const deleteCartItem = (id) => {
+        dispatch({type: 'DELETE_CART_ITEM', payload: id})
+    }
+
     const openModal = (message) => {
         setModal({show: true, message});
     }
@@ -32,7 +40,9 @@ export const AppProvider = ({children}) => {
         modal,
         addCourseToCartWidget,
         openModal,
-        closeModal
+        closeModal,
+        emptyCart,
+        deleteCartItem
     }}>
         {children}
     </AppContext.Provider>

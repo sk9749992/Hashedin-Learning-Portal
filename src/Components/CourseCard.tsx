@@ -1,6 +1,7 @@
 import React from 'react'
 import {FaStar} from 'react-icons/fa';
 import {FaAngleRight} from 'react-icons/fa';
+import {GoTrashcan} from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../context';
 import { ICourses } from '../Interfaces/Courses';
@@ -9,10 +10,11 @@ import DialogModal from './DialogModal';
 
 interface ICourseProp {
   course: ICourses;
+  screenName: string;
 }
 
-const CourseCard = ({course}: ICourseProp) => {
-  const {addCourseToCartWidget, openModal, courseWidget} = useGlobalContext();
+const CourseCard = ({course, screenName}: ICourseProp) => {
+  const {addCourseToCartWidget, openModal, courseWidget, deleteCartItem} = useGlobalContext();
   const navigate = useNavigate();
   const  {courseId, courseName, tags, author, IsWhishlisted, price, actualPrice} = course;
 
@@ -30,14 +32,43 @@ const CourseCard = ({course}: ICourseProp) => {
     navigate(`/course/${id}`);
   }
 
+
+  const handleCourseCardClasses = (name: string) => {
+    if (name === 'courseDetail') {
+      if (screenName === 'cart') {
+        return 'col-lg-6';
+      } else if (screenName === 'whislist') {
+        return 'col-lg-3';
+      } else {
+        return 'col-lg-4';
+      }
+    }
+
+    if (name === 'priceSection') {
+      return screenName === 'cart' ? 'col-lg-2' : 'col-lg-3';
+    }
+
+    if (name === 'navigateSection') {
+      if (screenName === 'cart') {
+        return 'col-lg-1';
+      } else if (screenName === 'whislist') {
+        return 'col-lg-3';
+      } else {
+        return 'col-lg-2';
+      }
+    }
+  }
+
   return (
     <>
     <div className='course-card'>
         <div className="row">
+
           <div className="col-lg-1 pt-1">
             <div className="course-img"></div>
           </div>
-          <div className='col-lg-4'>
+
+          <div className={`${handleCourseCardClasses('courseDetail')}`}>
             <p className="course-name pt-2 mb-1">
               {courseName}
             </p>
@@ -45,20 +76,31 @@ const CourseCard = ({course}: ICourseProp) => {
               return <button key={index} className="course-tag-btn">{tag}</button>
             })}
           </div>
-          <div className="col-lg-2">
+
+          {screenName !== 'cart' && <div className="col-lg-2">
             <div className="course-author-name pt-3">{author}</div>
-          </div>
-          <div className="col-lg-3 pt-3">
-            <FaStar className={IsWhishlisted ? 'whislist-icon whislisted' : 'whislist-icon'}/>
+          </div>}
+
+          {screenName === 'cart' && <div className="col-lg-2 pt-3 wishlist-link">
+            <a className="cursor">move to wishlist</a>
+          </div>}
+
+          <div className={`pt-3 ${handleCourseCardClasses('priceSection')}`} >
+            {screenName === 'dashboard' && <FaStar className={IsWhishlisted ? 'whislist-icon whislisted' : 'whislist-icon'}/>}
             <span className="course-price"><i>Rs</i> {price} <i>/-</i></span>
-            {actualPrice > 0 ? <span className="actual-price">
-                <i>Rs</i> {actualPrice} <i>/-</i></span> : <span>-</span>}
+            {screenName !== 'cart' && (actualPrice > 0 ? <span className="actual-price">
+                <i>Rs</i> {actualPrice} <i>/-</i></span> : <span className='empty-price'>-</span>)}
           </div>
-          <div className="col-lg-2 pt-3">
-            <button className="course-card-btn right-space" onClick={() => handleAddCart(courseId)}>add to card</button>
-            <span className="course-arrow cursor" onClick={() => handleNavigationToCourseDetailPage(courseId)}>
+
+          <div className={`pt-3 ${handleCourseCardClasses('navigateSection')}`}>
+            {screenName !== 'cart' && <button className="course-card-btn right-space" onClick={() => handleAddCart(courseId)}>add to card</button>}
+            {(screenName !== 'dashboard' && screenName !== 'recommended') ?  <span className="course-trash cursor right-space" onClick={() => deleteCartItem(courseId)}>
+              <GoTrashcan className='course-trash-icon'/>
+            </span>: ''}
+            {screenName !== 'cart' && <span className="course-arrow cursor" onClick={() => handleNavigationToCourseDetailPage(courseId)}>
               <FaAngleRight/>
-            </span>
+            </span>}
+            
           </div>
         </div>
     </div>
