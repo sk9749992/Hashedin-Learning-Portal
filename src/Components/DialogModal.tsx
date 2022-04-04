@@ -3,7 +3,7 @@ import { FaTimes } from 'react-icons/fa'
 import { useGlobalContext } from '../context'
 import './DialogModal.css'
 
-const DialogModal = () => {
+const DialogModal = (): JSX.Element => {
   const { modal, closeModal } = useGlobalContext();
   const {show, message} = modal;
   return (

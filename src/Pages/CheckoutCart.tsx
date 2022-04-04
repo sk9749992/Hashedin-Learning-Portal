@@ -7,7 +7,7 @@ import DialogModal from '../Components/DialogModal';
 import { HashedinCourses } from '../data';
 import './CheckoutCart.css'
 
-const CheckoutCart = () => {
+const CheckoutCart = (): JSX.Element => {
   const {courseWidget, emptyCart, openModal}  = useGlobalContext();
   const [cartCount, setCartCount] = useState<number>();
   const [totalCartPrice, setTotalCartPrice] = useState<number>();
@@ -25,7 +25,7 @@ const CheckoutCart = () => {
     }
   }, [courseWidget])
 
-  const calculateTotalCartPrice = () => {
+  const calculateTotalCartPrice = (): void => {
     const totalPrice = courseWidget.reduce((total: number, course: ICourses) => {
       total += course.price;
       return total;
@@ -33,7 +33,7 @@ const CheckoutCart = () => {
     setTotalCartPrice(totalPrice);
   }
 
-  const calculateAmountSaved = () => {
+  const calculateAmountSaved = (): void => {
     const amountSaved = courseWidget.reduce((total: number, course: ICourses) => {
       if (course.actualPrice > 0) {
         total += course.actualPrice - course.price;
@@ -43,7 +43,7 @@ const CheckoutCart = () => {
     setSavedAmount(amountSaved);
   }
 
-  const getRecommendedCourses = () => {
+  const getRecommendedCourses = (): void => {
     // Gets the tags of cart courses
     let cartCoursesTags:string[] = [];
     courseWidget.forEach((course: ICourses) => {
@@ -78,7 +78,7 @@ const CheckoutCart = () => {
     });
   }
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = (): void => {
     openModal('You have successfully places your order');
     emptyCart();
     setRecommendedCourses([]);

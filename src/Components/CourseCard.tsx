@@ -13,7 +13,7 @@ interface ICourseProp {
   screenName: string;
 }
 
-const CourseCard = ({course, screenName}: ICourseProp) => {
+const CourseCard = ({course, screenName}: ICourseProp): JSX.Element => {
   const {addCourseToCartWidget, openModal, courseWidget, deleteCartItem, updateWhisList, deleteWhisList, addToWhisList} = useGlobalContext();
   const navigate = useNavigate();
   const  {courseId, courseName, tags, author, IsWhishlisted, price, actualPrice} = course;
@@ -28,12 +28,12 @@ const CourseCard = ({course, screenName}: ICourseProp) => {
     }
   }
 
-  const handleNavigationToCourseDetailPage = (id: number) => {
+  const handleNavigationToCourseDetailPage = (id: number): void => {
     navigate(`/course/${id}`);
   }
 
 
-  const handleCourseCardClasses = (name: string) => {
+  const handleCourseCardClasses = (name: string): string => {
     if (name === 'courseDetail') {
       if (screenName === 'cart') {
         return 'col-lg-6';
@@ -55,9 +55,10 @@ const CourseCard = ({course, screenName}: ICourseProp) => {
         return 'col-lg-2';
       }
     }
+    return '';
   }
 
-  const deleteItem = (id: number) => {
+  const deleteItem = (id: number): void => {
     if (screenName === 'cart') {
       deleteCartItem(id);
     } else {
@@ -65,7 +66,7 @@ const CourseCard = ({course, screenName}: ICourseProp) => {
     }
   }
 
-  const moveToWhisList = (id: number) => {
+  const moveToWhisList = (id: number): void => {
     addToWhisList(id);
     deleteCartItem(id);
   }

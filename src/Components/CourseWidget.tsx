@@ -4,7 +4,7 @@ import { ICourses } from '../Interfaces/Courses';
 import { Link } from 'react-router-dom';
 import './CourseWidget.css'
 
-const CourseWidget = () => {
+const CourseWidget = (): JSX.Element => {
   const {courseWidget}  = useGlobalContext();
   const [totalCartValue, setTotalCartValue] = useState<number>();
 

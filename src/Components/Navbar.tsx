@@ -6,7 +6,7 @@ import {AiOutlineShoppingCart} from 'react-icons/ai';
 import {BiUserCircle} from 'react-icons/bi';
 import { useGlobalContext } from '../context';
 
-const Navbar = () => {
+const Navbar = (): JSX.Element => {
   const {courseWidget} = useGlobalContext();
   const [cartCount, setCartCount] = useState<number>(0);
 

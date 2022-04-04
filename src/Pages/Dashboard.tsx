@@ -8,7 +8,7 @@ import { useGlobalContext } from '../context';
 import './Dashboard.css';
 import { ICourses } from '../Interfaces/Courses';
 
-const Dashboard = () => {
+const Dashboard = (): JSX.Element => {
   const {courses} = useGlobalContext();
   const [dashboardCourses, setDashboardCourses] = useState<ICourses[]>([]);
   const [initialDashboardCourses, setInitialDashboardCourses] = useState<ICourses[]>([]);
@@ -26,14 +26,14 @@ const Dashboard = () => {
   ];
   const coursesPerPage = 7;
 
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const currentSortType = e.target.value;
     setDefaultSortType(currentSortType);
     setSortType(currentSortType);
     sortCourses(e.target.value);
   }
 
-  const sortCourses = (type: string) => {
+  const sortCourses = (type: string): void => {
     if (type === 'low') {
       dashboardCourses.sort((firstElement, secondElement) => {
         return firstElement.price - secondElement.price;
@@ -47,7 +47,7 @@ const Dashboard = () => {
     }
   }
 
-  const sortCoursesToDefaultOrder = () => {
+  const sortCoursesToDefaultOrder = (): void => {
     dashboardCourses.sort((firstElement, secondElement) => {
       return (
         defaultCourses.findIndex(
@@ -79,7 +79,7 @@ const Dashboard = () => {
     }
   }
 
-  const getArrayOfPages = (pageCount: number) => {
+  const getArrayOfPages = (pageCount: number): number[] => {
     const pageArray = [];
 
     if (pageCount > 0) {
@@ -90,7 +90,7 @@ const Dashboard = () => {
     return pageArray;
   }
 
-  const handlePagination = (pageNumber: number) => {
+  const handlePagination = (pageNumber: number): void => {
     const coursesTotalCount = initialDashboardCourses.length;
     const totalPages = Math.ceil(coursesTotalCount / coursesPerPage);
     if (pageNumber >= 1 && pageNumber <= totalPages) {
@@ -106,7 +106,7 @@ const Dashboard = () => {
     }
   }
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const searchedText = e.target.value;
     if (searchedText.length === 0 && isCourseSearched) {
       setInitialDashboardCourses(courses);
@@ -116,7 +116,7 @@ const Dashboard = () => {
     }
   }
 
-  const handleSearchClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSearchClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     let searchValue = (
       document.getElementById('search-bar') as HTMLInputElement
     ).value;

@@ -5,7 +5,7 @@ import {FaReact} from 'react-icons/fa';
 import './SubHeader.css';
 
 
-const SubHeader = ({pageName}: ISubHeaderProp) => {
+const SubHeader = ({pageName}: ISubHeaderProp): JSX.Element => {
   return (
     <section className='sub-header'>
         <div className="sub-header-text">

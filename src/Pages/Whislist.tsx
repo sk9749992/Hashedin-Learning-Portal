@@ -5,7 +5,7 @@ import SubHeader from '../Components/SubHeader'
 import { useGlobalContext } from '../context'
 import { ICourses } from '../Interfaces/Courses';
 
-const Whislist = () => {
+const Whislist = (): JSX.Element => {
   const {whisListCourses} = useGlobalContext();
   const [defaultWhisListCourses, setDefaultWhisListCourses] = useState<ICourses[]>([]);
   const [initalWhislistCourses, setInitialWhislistCourses] = useState<ICourses[]>([]);
@@ -15,7 +15,7 @@ const Whislist = () => {
     { value: 'high', display: 'High to Low' },
   ];
 
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     sortCourses(e.target.value);
   }
 
@@ -25,7 +25,7 @@ const Whislist = () => {
   }, [whisListCourses])
 
 
-  const sortCourses = (type: string) => {
+  const sortCourses = (type: string): void => {
     if (type === 'low') {
       initalWhislistCourses.sort((firstElement: ICourses, secondElement: ICourses) => {
         return firstElement.price - secondElement.price;
@@ -40,7 +40,7 @@ const Whislist = () => {
     setInitialWhislistCourses([...initalWhislistCourses]);
   }
 
-  const sortCoursesToDefaultOrder = () => {
+  const sortCoursesToDefaultOrder = (): void => {
     initalWhislistCourses.sort((firstElement: ICourses, secondElement: ICourses) => {
       return (
         defaultWhisListCourses.findIndex(

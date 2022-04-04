@@ -9,7 +9,7 @@ import { useGlobalContext } from '../context';
 import { ICourses } from '../Interfaces/Courses';
 import DialogModal from '../Components/DialogModal';
 
-const CourseDetail = () => {
+const CourseDetail = (): JSX.Element => {
   const {addCourseToCartWidget, courseWidget, openModal, addToWhisList} = useGlobalContext();
   const {courseId} = useParams();
   const [timeLeftForOffer, setTimeLeftForOffer] = useState<number>();
@@ -21,7 +21,7 @@ const CourseDetail = () => {
     setTimeLeftForOffer(24 - new Date().getHours());
   }, [courseId]);
 
-  const handleAddingToCart = (id: string) => {
+  const handleAddingToCart = (id: string): void => {
     const index = courseWidget.findIndex((course: ICourses) => course.courseId === parseInt(id));
     if (index < 0) {
       addCourseToCartWidget(parseInt(id));
