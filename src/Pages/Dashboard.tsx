@@ -96,11 +96,11 @@ const Dashboard = () => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setDefaultSortType('default');
       setActivePage(pageNumber);
-      const startIndex = (pageNumber - 1) * 5;
+      const startIndex = (pageNumber - 1) * 7;
       const endIndex =
-        coursesTotalCount - startIndex <= 5
+        coursesTotalCount - startIndex <= 7
           ? coursesTotalCount
-          : startIndex + 5;
+          : startIndex + 7;
       setDashboardCourses(initialDashboardCourses.slice(startIndex, endIndex));
       setDefaultCourses(initialDashboardCourses.slice(startIndex, endIndex));
     }

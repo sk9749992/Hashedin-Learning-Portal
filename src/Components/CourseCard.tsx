@@ -1,18 +1,37 @@
 import React from 'react'
 import {FaStar} from 'react-icons/fa';
 import {FaAngleRight} from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../context';
 import { ICourses } from '../Interfaces/Courses';
 import './CourseCard.css';
+import DialogModal from './DialogModal';
 
 interface ICourseProp {
   course: ICourses;
 }
 
 const CourseCard = ({course}: ICourseProp) => {
-  const {addCourseToCartWidget} = useGlobalContext();
+  const {addCourseToCartWidget, openModal, courseWidget} = useGlobalContext();
+  const navigate = useNavigate();
   const  {courseId, courseName, tags, author, IsWhishlisted, price, actualPrice} = course;
+
+  const handleAddCart = (id: number) => {
+    const index = courseWidget.findIndex((course: ICourses) => course.courseId === id);
+    if (index < 0) {
+      addCourseToCartWidget(id);
+      openModal('Course successfully added to the cart');
+    } else {
+      openModal('Already Exists in Cart');
+    }
+  }
+
+  const handleNavigationToCourseDetailPage = (id: number) => {
+    navigate(`/course/${id}`);
+  }
+
   return (
+    <>
     <div className='course-card'>
         <div className="row">
           <div className="col-lg-1 pt-1">
@@ -36,13 +55,15 @@ const CourseCard = ({course}: ICourseProp) => {
                 <i>Rs</i> {actualPrice} <i>/-</i></span> : <span>-</span>}
           </div>
           <div className="col-lg-2 pt-3">
-            <button className="course-card-btn right-space" onClick={() => addCourseToCartWidget(courseId)}>add to card</button>
-            <span className="course-arrow cursor">
+            <button className="course-card-btn right-space" onClick={() => handleAddCart(courseId)}>add to card</button>
+            <span className="course-arrow cursor" onClick={() => handleNavigationToCourseDetailPage(courseId)}>
               <FaAngleRight/>
             </span>
           </div>
         </div>
     </div>
+    <DialogModal/>
+    </>
   )
 }
 

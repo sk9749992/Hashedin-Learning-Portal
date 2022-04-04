@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useGlobalContext } from '../context'
 import { ICourses } from '../Interfaces/Courses';
+import { Link } from 'react-router-dom';
 import './CourseWidget.css'
 
 const CourseWidget = () => {
@@ -53,7 +54,7 @@ const CourseWidget = () => {
         >
       </div>
       {courseWidget?.length > 0 && <div className="col-lg-6 footer-checkout">
-        go to checkout
+        <Link to='/cart' className='checkout-link'>go to checkout</Link>
       </div>}
     </div>
       </footer>

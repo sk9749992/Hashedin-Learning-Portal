@@ -13,14 +13,26 @@ const initialState = {
 
 export const AppProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [modal, setModal] = useState({show: false, message: ''});
 
     const addCourseToCartWidget = (id) => {
         dispatch({type: 'ADD_TO_WIDGET', payload: id});
     }
 
+    const openModal = (message) => {
+        setModal({show: true, message});
+    }
+
+    const closeModal = () => {
+        setModal({show: false});
+    }
+
     return <AppContext.Provider value={{
         ...state,
-        addCourseToCartWidget
+        modal,
+        addCourseToCartWidget,
+        openModal,
+        closeModal
     }}>
         {children}
     </AppContext.Provider>

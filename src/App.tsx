@@ -16,7 +16,7 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path='/' element={<Dashboard/>}></Route>
-          <Route path='/:courseId' element={<CourseDetail/>}></Route>
+          <Route path='/course/:courseId' element={<CourseDetail/>}></Route>
           <Route path='/whislist' element={<Whislist/>}></Route>
           <Route path='/profile' element={<ProfileInformation/>}></Route>
           <Route path='/cart' element={<CheckoutCart/>}></Route>
